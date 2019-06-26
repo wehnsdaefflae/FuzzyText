@@ -14,15 +14,17 @@ def compare(string_a: str, string_b: str) -> float:
 
 def search_file(file_path: str, minimum_similarity: float, search_term: str) -> Generator[RESULT, None, None]:
     l_term = len(search_term)
+    context = 10
     with open(file_path, mode="r") as file:
         for l, each_line in enumerate(file):
-            each_line = each_line.lower()
+            each_line = each_line.lower()[:-1]
             l_line = len(each_line)
             for i in range(l_line - l_term):
                 found_term = each_line[i:i+l_term]
                 s = compare(search_term, found_term)
                 if s >= minimum_similarity:
-                    yield found_term, file_path, -1, l + 1, i, s
+                    r = "..." + each_line[max(0, i-context):min(i + l_term + context, l_line)] + "..."
+                    yield r, file_path, -1, l + 1, i, s
 
 
 def search(file_pattern: str, minimum_similarity: float, search_term: str) -> Iterable[RESULT]:
