@@ -119,7 +119,8 @@ def main():
         arguments.append("[fathom ]")
 
     elif l_arguments < 4:
-        raise ValueError(f"{arguments[0]} needs two arguments: file pattern, minimum similarity (0. - 1.), and search term in square brackets")
+        raise ValueError(f"\n{arguments[0]} needs four arguments: file pattern, minimum similarity (0. - 1.), target result file, and search term in square brackets"
+                         f'\ne.g. "python {arguments[0]} data\\big.txt .8 results.csv [fathom ]"')
 
     try:
         similarity = float(arguments[2])
